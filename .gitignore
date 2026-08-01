@@ -1,1 +1,29 @@
-node_modules
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Test files
+backend/test.py
+backend/test_models.py
+
+# Test files
+backend/test.py
+backend/test_models.py
+
+# Environment variables
+.env
+
+# Node
+node_modules/
+dist/
+
+# Uploads
+uploads/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

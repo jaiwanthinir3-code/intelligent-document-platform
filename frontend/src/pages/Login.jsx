@@ -1,5 +1,5 @@
 import { signInWithPopup } from "firebase/auth";
-import { auth, provider } from "../firebase";
+import { auth, provider } from "../lib/firebase";
 import { supabase } from "../lib/supabase";
 import { useNavigate } from "react-router-dom";
 
