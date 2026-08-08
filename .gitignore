@@ -13,7 +13,7 @@ backend/test_models.py
 
 # Environment variables
 .env
-
+.env.*
 # Node
 node_modules/
 dist/
@@ -27,3 +27,5 @@ uploads/
 # OS files
 .DS_Store
 Thumbs.db
+# Firebase service account
+backend/firebase-service-account.json

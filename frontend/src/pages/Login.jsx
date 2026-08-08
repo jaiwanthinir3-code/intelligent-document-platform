@@ -1,18 +1,21 @@
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../lib/firebase";
-import { supabase } from "../lib/supabase";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../lib/supabase";
 
-function Login() {
+export default function Login() {
   const navigate = useNavigate();
 
-  const handleGoogleLogin = async () => {
+  async function handleGoogleLogin() {
     try {
-      // Google Sign-In
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      // Save user in Supabase
+      // Save user details for Sidebar
+      localStorage.setItem("name", user.displayName || "User");
+      localStorage.setItem("email", user.email || "");
+
+      // Save user profile in Supabase
       const { error } = await supabase
         .from("profiles")
         .upsert({
@@ -22,40 +25,41 @@ function Login() {
           avatar: user.photoURL,
         });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase profile error:", error);
+      }
 
-      alert(`Welcome ${user.displayName}`);
-
-      // Go to Dashboard
+      // Go to dashboard
       navigate("/dashboard");
+
     } catch (error) {
       console.error("Login Error:", error);
       alert(error.message);
     }
-  };
+  }
 
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-96">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
 
-        <h1 className="text-3xl font-bold text-center text-blue-600">
-          Intelligent Document Platform
+      <div className="bg-white shadow-xl rounded-2xl p-8 w-96 text-center">
+
+        <h1 className="text-3xl font-bold mb-3">
+          📄 Intelligent Document Platform
         </h1>
 
-        <p className="text-center text-gray-600 mt-3">
-          AI-powered document understanding
+        <p className="text-gray-500 mb-8">
+          Upload, summarize and chat with your documents using AI.
         </p>
 
         <button
           onClick={handleGoogleLogin}
-          className="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold"
         >
-          Login with Google
+          Continue with Google
         </button>
 
       </div>
+
     </div>
   );
 }
-
-export default Login;
