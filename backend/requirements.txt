@@ -5,3 +5,4 @@ google-generativeai
 PyMuPDF
 supabase
 python-multipart
+firebase-admin
