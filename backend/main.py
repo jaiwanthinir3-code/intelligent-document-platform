@@ -1,3 +1,4 @@
+
 from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -5,15 +6,15 @@ import shutil
 import os
 import fitz
 from fastapi import Header, HTTPException
-import firebase_admin
-from firebase_admin import credentials, auth
+from firebase_admin import auth
+import firebase_config
+
 from services.pdf_service import extract_text
 from services.gemini_service import ask_gemini
 
 app = FastAPI()
 
-cred = credentials.Certificate("firebase-service-account.json")
-firebase_admin.initialize_app(cred)
+
 
  
 def verify_firebase_token(authorization: str):
